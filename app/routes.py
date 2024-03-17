@@ -164,7 +164,7 @@ def get_user(user_id):
     }
     return jsonify(data)
 
-# Route für die Liste aller Benutzer
+# API für die Liste aller Benutzer
 @app.route('/api/users')
 def get_all_users():
     users = Benutzer.query.all()
@@ -181,7 +181,7 @@ def get_all_users():
         user_list.append(user_data)
     return jsonify({'users': user_list})
 
-# Route für die Details einer Notiz
+# API für die Details einer Notiz
 @app.route('/api/notizen/<int:notiz_id>')
 def get_notiz(notiz_id):
     notiz = Notizen.query.get_or_404(notiz_id)
@@ -195,7 +195,7 @@ def get_notiz(notiz_id):
     }
     return jsonify(data)
 
-# Route für die Liste aller Notizen
+# API für die Liste aller Notizen
 @app.route('/api/notizen')
 def get_all_notizen():
     notizen = Notizen.query.all()
