@@ -1,4 +1,4 @@
-from flask import render_template, flash, redirect, url_for, request, abort
+from flask import render_template, flash, redirect, url_for, request, abort, jsonify
 from flask_login import login_user, current_user, logout_user, login_required, LoginManager
 from app import app, db
 from app.forms import LoginForm, RegistrationForm, NotizForm
@@ -149,3 +149,66 @@ def toggle_favorite(notiz_id):
         flash('Notiz wurde erfolgreich als Favorit markiert.', 'success')
 
     return redirect(url_for('index'))
+
+# API für die Benutzerdetails
+@app.route('/api/users/<int:user_id>')
+def get_user(user_id):
+    user = Benutzer.query.get_or_404(user_id)
+    data = {
+        'id': user.id,
+        'Benutzername': user.Benutzername,
+        'email': user.email,
+        '_links': {
+            'self': url_for('get_user', user_id=user.id)
+        }
+    }
+    return jsonify(data)
+
+# Route für die Liste aller Benutzer
+@app.route('/api/users')
+def get_all_users():
+    users = Benutzer.query.all()
+    user_list = []
+    for user in users:
+        user_data = {
+            'id': user.id,
+            'Benutzername': user.Benutzername,
+            'email': user.email,
+            '_links': {
+                'self': url_for('get_user', user_id=user.id)
+            }
+        }
+        user_list.append(user_data)
+    return jsonify({'users': user_list})
+
+# Route für die Details einer Notiz
+@app.route('/api/notizen/<int:notiz_id>')
+def get_notiz(notiz_id):
+    notiz = Notizen.query.get_or_404(notiz_id)
+    data = {
+        'id': notiz.id,
+        'Inhalt': notiz.Inhalt,
+        'user_id': notiz.user_id,
+        '_links': {
+            'self': url_for('get_notiz', notiz_id=notiz.id)
+        }
+    }
+    return jsonify(data)
+
+# Route für die Liste aller Notizen
+@app.route('/api/notizen')
+def get_all_notizen():
+    notizen = Notizen.query.all()
+    notiz_list = []
+    for notiz in notizen:
+        notiz_data = {
+            'id': notiz.id,
+            'Inhalt': notiz.Inhalt,
+            'user_id': notiz.user_id,
+            '_links': {
+                'self': url_for('get_notiz', notiz_id=notiz.id)
+            }
+        }
+        notiz_list.append(notiz_data)
+    return jsonify({'notizen': notiz_list})
+
