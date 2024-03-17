@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- Kontrollieren, ob ein Titel vorhanden ist. -->
+        {% if title %}
+        <title> {{ title }} - Notizen </title>
+        {% else %}
+        <!-- Falls nicht, standarmässig ein Willkommenstitel anzeigen -->
+        <title>Willkommen zu deinen Notizen</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>
+            Notizen:
+             <a href="{{ url_for('index') }}">Hauptseite</a>
+             <!-- Anzeige des Anmeldelinks, wenn der Benutzer nicht angemeldet ist. -->
+             {% if current_user.is_anonymous %}
+             <a href="{{ url_for('login') }}">Anmelden</a>
+             <!-- Profil- und Abmeldelinks anzeigen, wenn der Benutzer angemeldet ist. -->
+             {% else %}
+             <a href="{{ url_for('benutzer', benutzer_id=current_user.id) }}">Profil</a>
+             <a href="{{ url_for('logout') }}">Abmelden</a>
+             {% endif %}
+        </div>
+        <hr>
+        <!-- Anzeigen von Meldungen, sofern vorhanden -->
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </body>
+</html>

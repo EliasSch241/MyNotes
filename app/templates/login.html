@@ -1,0 +1,37 @@
+<!-- Erweiterung der Grundstruktur der Webseite -->
+{% extends "base.html" %}
+<!-- Block für den Inhalt der Anmeldeseite -->
+{% block content %}
+    <!-- Überschrift der Anmeldeseite -->
+    <h1>Anmeldung</h1>
+    <!-- Formular für die Anmeldung -->
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            <!-- Feld für den Benutzernamen -->
+            {{ form.Benutzername.label }}<br>
+            {{ form.Benutzername(size=32) }}<br>
+            <!-- Fehlermeldung für das Benutzernamen Feld -->
+            {% for error in form.Benutzername.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+
+        <p>
+            <!-- Feld für das Passwort -->
+            {{ form.Passwort.label }}<br>
+            {{ form.Passwort(size=32) }}<br>
+            <!-- Fehlermeldungen für das Passwort Feld -->
+            {% for error in form.Passwort.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <!-- Checkbox für das Logindaten Speichern Feld -->
+        <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    <p>
+        <!-- Link zur Registrierung -->
+        Noch keinen Benutzer? <a href="{{ url_for('register') }}">Klicken für die Registrierung!</a>
+    </p>
+{% endblock %}

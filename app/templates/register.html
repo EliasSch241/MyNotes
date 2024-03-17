@@ -1,0 +1,47 @@
+<!-- Erweiterung der Grundstruktur der Webseite -->
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Registrierung</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            <!-- Feld für den Benutzernamen -->
+            {{ form.Benutzername.label }}<br>
+            {{ form.Benutzername(size=32) }}<br>
+            <!-- Fehler für das Benutrenamen Feld -->
+            {% for error in form.Benutzername.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            <!-- Feld für die Mail Adresse -->
+            {{ form.email.label }}<br>
+            {{ form.email(size=64) }}<br>
+            <!-- Fehler für das Mail Adresse Feld -->
+            {% for error in form.email.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            <!-- Feld für das Passwort -->
+            {{ form.Passwort.label }}<br>
+            {{ form.Passwort(size=32) }}<br>
+            <!-- Fehler für das Passwort Feld -->
+            {% for error in form.Passwort.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            <!-- Feld für die Passwort Bestätigung -->
+            {{ form.Passwort2.label }}<br>
+            {{ form.Passwort2(size=32) }}<br>
+            <!-- Fehler für das Passwort Bestätigung Feld -->
+            {% for error in form.Passwort2.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <!-- Senden Schaltfläche -->
+        <p>{{ form.submit() }}</p>
+    </form>
+{% endblock %}

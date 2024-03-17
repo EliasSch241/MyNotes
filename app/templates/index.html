@@ -1,0 +1,37 @@
+<!-- Erweiterung der Grundstruktur der Webseite -->
+{% extends "base.html" %}
+<!-- Block für den Inhalt der Indexseite -->
+{% block content %}
+    <!-- Überschrift und Begrüssung mit Benutzername -->
+    <h1>Hallo, {{ current_user.Benutzername }}</h1>
+    <!-- Kurzerklärung der Funktionalität der Webseite -->
+    <p>Hier werden deine Notizen angezeigt. Für eine Bearbeitung der Notizen wechsle in deine <a href="{{ url_for('benutzer', benutzer_id=current_user.id) }}">Profil</a> Seite</p>
+    <h2>Favoriten</h2>
+    <!-- Abfrage und Anzeige der Favoriten -->
+    {% for notiz in favoriten %}
+    <p>
+        <!-- Anzeige des Benutzernames und der Favoriten -->
+        <span style="display: inline-block;">{{ notiz.user.Benutzername }} Notiz: <b>{{ notiz.Inhalt }}</b></span>
+        <!-- Schaltfläche zum Entfernen als Favorit -->
+        <form action="{{ url_for('toggle_favorite', notiz_id=notiz.id) }}" method="post" style="display: inline;">
+            <button type="submit" class="favorit-button">
+                <span class="favorit">★</span> Als Favorit markiert
+            </button>
+        </form>
+    </p>
+    {% endfor %}
+
+    <h2>Andere Notizen</h2>
+    {% for notiz in andere_notizen %}
+    <p>
+        <!-- Anzeige der Notizen, welche nicht als Favorit definiert sind -->
+        <span style="display: inline-block;">{{ notiz.user.Benutzername }} Notiz: <b>{{ notiz.Inhalt }}</b></span>
+        <!-- Schaltfläche zum Markieren als Favorit -->
+        <form action="{{ url_for('toggle_favorite', notiz_id=notiz.id) }}" method="post" style="display: inline;">
+            <button type="submit" class="favorit-button">
+                <span class="nicht-favorit">☆</span> Als Favorit markieren
+            </button>
+        </form>
+    </p>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,13 @@
+<!-- Error 404 Meldung, wenn eine Ressource aufgerufen wird, welche nicht existiert -->
+<html>
+    <!-- Erweiterung der Grundstruktur der Webseite -->
+    {% extends "base.html" %}
+    {% block content %}
+    <body>
+        <h1>Seite nicht gefunden</h1>
+        <h2>Du hast dich wohl verlaufen &#128514;</h2>
+        <p>Kehre zur Hauptseite zurück.</p>
+        <p><a href="{{ url_for('index') }}">Zurück</a></p>
+    </body>
+    {% endblock %}
+</html>

@@ -1,0 +1,31 @@
+<!-- Erweiterung der Grundstruktur der Webseite -->
+{% extends "base.html" %}
+<!-- Block für den Inhalt der Bearbeitungsseite -->
+{% block content %}
+<!-- Überschrift für die Bearbeitungsseite -->
+    <h1>Notiz bearbeiten</h1>
+    <!-- Formular zum Bearbeiten der Notiz -->
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            <!-- Eingabefeld für die Notiz -->
+            {{ form.notiz.label }}<br>
+            {{ form.notiz(cols=32, rows=4) }}<br>
+            <!-- Anzeige von Fehlermeldungen -->
+            {%for error in form.notiz.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <!-- Senden Schaltfläche für das Speichern der Anpassungen -->
+        <p>{{ form.submit() }}
+        <!-- Link und Schaltfläche für das Abbrechen -->
+        <a href="{{ url_for('index') }}">
+            <button type="button">Abbrechen</button>
+        </a>
+            <!-- Link und Schaltfläche für das Löschen der Notizi -->
+            <a href="{{ url_for('delete_note', notiz_id=notiz.id) }}">
+                <button type="button">Löschen</button>
+            </a>
+        </p>
+    </form>
+{% endblock %}

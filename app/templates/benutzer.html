@@ -1,0 +1,36 @@
+<!-- Erweiterung der Grundstruktur der Webseite -->
+{% extends "base.html" %}
+<!-- Block für den Inhalt der Profilseite -->
+{% block content %}
+    <!-- Begrüssungsnachricht der Profilseite -->
+    <h1>Hallo {{ benutzer.Benutzername }} dies ist deine Profilseite</h1>
+    <p>
+        Auf dieser Seite kannst du deine Notizen verwalten und bearbeiten
+    </p>
+    <!-- Formular für das erstellen von Notizen -->
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            <!-- Eingabefeld für Notiz -->
+            {{ form.notiz.label }}<br>
+            {{ form.notiz(cols=32, rows=4) }}<br>
+            <!-- Fehlermeldungen anzeigen -->
+            {% for error in form.notiz.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <!-- Senden Button -->
+        <p>{{ form.submit() }}</p>
+    </form>
+    <!-- Alle Notizen des Benutzers abfragen -->
+    {% for notiz in notizen %}
+        <p>
+            <!-- Anzeige der Notiz(en) (sofern vorhanden) -->
+            {{ notiz.user.Benutzername }} Notiz: <b>{{ notiz.Inhalt }}</b>
+            <p>
+                <!-- Link für die Bearbeitung der Notiz -->
+                <a href="{{ url_for('edit_note', notiz_id=notiz.id) }}">Bearbeiten</a>
+            </p>
+        </p>
+    {% endfor %}
+{% endblock %}
